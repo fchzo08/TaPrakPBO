@@ -20,7 +20,7 @@ public class LoginController implements ActionListener{
 
     Login view;
     Karyawan  karyawan;
-    
+    private UtamaController utamaController;
     private static final Logger LOG = Logger.getLogger(LoginController.class.getName());
     
     public LoginController(Login view){
@@ -39,18 +39,15 @@ public class LoginController implements ActionListener{
         karyawan = new Karyawan(view.getTextField1(),view.getPasswordField1());
         if(karyawan.getKaryawanByUsername()){
             LOG.info("Login Berhasil");
+            utamaController = UtamaController.getInstance();
             view.setVisible(false);
-            Utama mainForm = new Utama();
-            mainForm.setVisible(true);
             LOG.info("Berpindah Halaman ke halaman utama");
+            utamaController.setLoggedKaryawan(karyawan);
+            utamaController.showPage();
+            
         }else{
             view.showMessage("Login Gagal Username/Password Salah");
             LOG.info("Login Gagal");
         }
-    }
-    
-    private Karyawan _getKaryawan(){
-        
-        return null;
     }
 }
