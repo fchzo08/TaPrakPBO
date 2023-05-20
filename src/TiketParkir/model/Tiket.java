@@ -31,6 +31,11 @@ public class Tiket {
     public void setTarif(Double t){
         this.tarif=t;
     }
+
+    public String getKendaraan() {
+        return Kendaraan;
+    }
+    
     public Double getTarif(){
         return this.tarif;
     }

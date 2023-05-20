@@ -39,6 +39,7 @@ public class UtamaController implements ActionListener, ItemListener {
     private Utama utamaView;
     private Tiket tiket;
     private static final Logger LOG = Logger.getLogger(UtamaController.class.getName());
+    UtamaHelper uh;
     TiketHelper th;
     double totalTarif;
     String waktuMasuk;
@@ -46,6 +47,7 @@ public class UtamaController implements ActionListener, ItemListener {
         utamaView = new Utama();
         tiket = new Tiket();
         th = new TiketHelper(new ConnectionDB());
+        uh = new UtamaHelper(new ConnectionDB());
         listHargaKendaraan.put("Motor",2000d);
         listHargaKendaraan.put("Mobil",5000d);
         listHargaKendaraan.put("Sepeda",1000d); 
@@ -70,7 +72,7 @@ public class UtamaController implements ActionListener, ItemListener {
         dtm.addColumn("Tarif");
         for(Tiket t:tikets){
             Object[] row = {t.getId(),t.getWaktuMasuk().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                t.getWaktuKeluar().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                t.getWaktuKeluar().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),t.getKendaraan(),
                 t.getTarif()
             };
             dtm.addRow(row);
@@ -113,7 +115,17 @@ public class UtamaController implements ActionListener, ItemListener {
         if(e.getSource()==utamaView.getJb_bayar()){
             if(utamaView.getTb_masukuang().getText()!=null){
                 double uangMasuk = Double.parseDouble(utamaView.getTb_masukuang().getText().toString());
-                utamaView.getL_kembalian().setText(String.valueOf(uangMasuk-totalTarif));
+                double ttl = uangMasuk-totalTarif;
+                if(ttl>=0){
+                utamaView.getL_kembalian().setText(String.valueOf(ttl));
+                    String  jjns = (String) utamaView.getCb_jenisKendaraan().getSelectedItem();
+                    int idd = Integer.parseInt(utamaView.getTb_kode().getText());
+                    LocalDateTime sekarang = LocalDateTime.now();
+                    uh.printNota(idd,waktuMasuk,sekarang, jjns, karyawan.getNama(), totalTarif);
+                    uh.inputDB(sekarang, jjns, totalTarif, idd);
+                }else{
+                    utamaView.showMessage("Uang Kurang");
+                }
             }
         }
     }

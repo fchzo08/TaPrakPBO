@@ -133,14 +133,15 @@ public class TiketHelper {
 //        }
         String filePath = "D:\\Project Java LAT\\TaPBO\\karcis\\karcis"+tik.getId()+".txt";
         try(PrintWriter writer = new PrintWriter(filePath)){
-            writer.println("========== Nomor Karcis ==========");
+            writer.println("========== Nomor Karcis ===========");
             writer.println("");
             writer.println("date : "+tik.getWaktuMasuk().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             writer.println("");
             writer.println("          NO : "+tik.getId());
             writer.println("");
-            writer.println("");
-            writer.println("==================================");
+            writer.println("*Tunjukan karcis bila anda keluar*");
+            writer.println(" Karcis jangan sampai hilang/Rusak");
+            writer.println("===================================");
             LOG.info("Tiket berhasil diCetak");
         } catch (FileNotFoundException e) {
         }

@@ -1,0 +1,13 @@
+=========== Nota Karcis ============
+
+ NO    : 40
+ Masuk : 2023-05-20 23:36:34
+ Keluar: 2023-05-21 04:03:22
+ Jenis : Mobil
+ Ptgs  : budi
+ Tarif : 0.0
+====================================
+
+ *TERIMA KASIH ATAS KUNJUNGAN ANDA* 
+
+====================================
