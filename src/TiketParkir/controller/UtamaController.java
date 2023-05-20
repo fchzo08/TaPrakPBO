@@ -6,6 +6,7 @@ package TiketParkir.controller;
 
 import TiketParkir.helper.ConnectionDB;
 import TiketParkir.helper.TiketHelper;
+import TiketParkir.helper.UtamaHelper;
 import TiketParkir.model.Karyawan;
 import TiketParkir.model.Tiket;
 import TiketParkir.views.Login;
@@ -93,7 +94,7 @@ public class UtamaController implements ActionListener, ItemListener {
         utamaView.setVisible(true);
         utamaView.setlbl_karyawanName("Nama Karyawan : "+karyawan.getNama());
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==utamaView.getJb_cari()){

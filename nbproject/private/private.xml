@@ -5,11 +5,15 @@
         <group>
             <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/controller/UtamaController.java</file>
             <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/views/Login.java</file>
+            <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/model/Karyawan.java</file>
             <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/model/Tiket.java</file>
             <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/controller/LoginController.java</file>
+            <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/TaPBO.java</file>
             <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/helper/TiketHelper.java</file>
             <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/views/Utama.java</file>
             <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/helper/UtamaHelper.java</file>
+            <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/controller/InputKarcisController.java</file>
+            <file>file:/D:/Project%20Java%20LAT/TaPBO/src/TiketParkir/views/InputKarcis.java</file>
         </group>
     </open-files>
 </project-private>
