@@ -37,6 +37,7 @@ public class InputKarcisController implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         Tiket tiket = new Tiket(idTotal, LocalDateTime.now());
         th.inputTiket(tiket);
+        th.printTiket(tiket);
         LOG.info("Tiket Ditambahkan ke Database");
         idTotal++;
     }
