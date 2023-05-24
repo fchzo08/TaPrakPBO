@@ -4,12 +4,15 @@
  */
 package TiketParkir.controller;
 
+import TiketParkir.helper.ConnectionDB;
+import TiketParkir.helper.KaryawanHelper;
 import TiketParkir.model.Karyawan;
 import TiketParkir.views.InputKarcis;
 import TiketParkir.views.Login;
 import TiketParkir.views.Utama;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 /**
@@ -23,8 +26,14 @@ public class LoginController implements ActionListener{
     private UtamaController utamaController;
     private static final Logger LOG = Logger.getLogger(LoginController.class.getName());
     
-    public LoginController(Login view){
+    public LoginController(Login view) throws SQLException{
         this.view=view;
+        KaryawanHelper kh = new KaryawanHelper(new ConnectionDB());
+        if(kh.isFirst()==0){
+            kh.inputKaryawan("ADMIN", "admin", "admin");
+            LOG.info("Admin user created");
+            kh.closeConnection();
+        }
     }
     
     @Override

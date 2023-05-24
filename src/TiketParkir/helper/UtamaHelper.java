@@ -7,9 +7,12 @@ package TiketParkir.helper;
 import TiketParkir.model.Tiket;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.*;
 
 /**
  *
@@ -22,7 +25,6 @@ public class UtamaHelper {
     public UtamaHelper(ConnectionDB db){
         this.con=db;
     }
-    ///!!! sepertinya salah
     public void inputDB(LocalDateTime waktu, String ken,double tar,int id) {
         try {
             DateTimeFormatter dtmFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -33,6 +35,19 @@ public class UtamaHelper {
         } catch (Exception e) {
             LOG.info("Query TIket DB Tidak berhasil");
         }
+    }
+    public int getTotalTiket(){
+        ResultSet rs;
+        try {
+            String query = "SELECT COUNT(id_tiket) as 'ID' FROM TIKET";
+            rs = con.statement.executeQuery(query);
+            if(rs.next()){
+                return rs.getInt("ID");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UtamaHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
     }
     
     public static void printNota(int id, String masuk, LocalDateTime keluar, String jns, String ptgs,double tarif) {
@@ -55,6 +70,4 @@ public class UtamaHelper {
         } catch (FileNotFoundException e) {
         }
     }
-    
-    
 }

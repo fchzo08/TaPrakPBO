@@ -90,47 +90,6 @@ public class TiketHelper {
         return null;
     }
     public static void printTiket(Tiket tik) {
-//        String[] ToPrint = {
-//            "========== Nomor Karcis ==========",
-//            "",
-//            "date : "+tik.getWaktuMasuk(),
-//            "          NO : "+tik.getId(),
-//            "",
-//            "=================================="
-//        };
-//        PrintService[] ps = PrintServiceLookup.lookupPrintServices(null, null);
-//        for (int i = 0; i < ps.length; i++) {
-//            PrintService printer = ps[i];
-//            System.out.println("Printer #" + (i + 1) + ": " + printer.getName());}
-//Printer #1: Send To OneNote 2016
-//Printer #2: OneNote for Windows 10
-//Printer #3: Microsoft XPS Document Writer
-//Printer #4: Microsoft Print to PDF
-//Printer #5: Fax
-//Printer #6: Canon G2010 series
-//Printer #7: Adobe PDF
-//        if(ps.length>0){
-//            PrintService printer = ps[0];
-//            DocPrintJob pj = printer.createPrintJob();
-//            StringBuilder sb = new StringBuilder();
-//            for (String line : ToPrint){
-//                sb.append(line).append("\n");
-//            }
-//            String textToPoint = sb.toString();
-//            System.out.println(textToPoint);
-//            DocFlavor f = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-//            Doc doc =  new SimpleDoc(textToPoint.getBytes(), f, null);
-//            System.out.println(doc);
-//            PrintRequestAttributeSet attributes = new HashPrintRequestAttributeSet();
-//            try {
-//                pj.print(doc, null);
-//                LOG.info("Tiket berhasil diCetak");
-//            } catch (PrintException e) {
-//                LOG.info("Terjadi Kesalahan Saat Mencetak");
-//            }
-//        }else{
-//            LOG.info("Tidak ada printer yang tersedia");
-//        }
         String filePath = "D:\\Project Java LAT\\TaPBO\\karcis\\karcis"+tik.getId()+".txt";
         try(PrintWriter writer = new PrintWriter(filePath)){
             writer.println("========== Nomor Karcis ===========");

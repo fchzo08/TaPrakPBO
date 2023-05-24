@@ -9,6 +9,7 @@ import TiketParkir.helper.TiketHelper;
 import TiketParkir.helper.UtamaHelper;
 import TiketParkir.model.Karyawan;
 import TiketParkir.model.Tiket;
+import TiketParkir.views.InputKaryawan;
 import TiketParkir.views.Login;
 import TiketParkir.views.Utama;
 import java.awt.event.ActionEvent;
@@ -23,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author fachr
@@ -50,17 +51,26 @@ public class UtamaController implements ActionListener, ItemListener {
         uh = new UtamaHelper(new ConnectionDB());
         listHargaKendaraan.put("Motor",2000d);
         listHargaKendaraan.put("Mobil",5000d);
-        listHargaKendaraan.put("Sepeda",1000d); 
-        loadAllTiket();
+        listHargaKendaraan.put("Sepeda",1000d);
         utamaView.getJb_cari().addActionListener(this);
         for(String key : listHargaKendaraan.keySet()){
             utamaView.getCb_jenisKendaraan().addItem(key);
         }
+        loadAllTiket();
         utamaView.getCb_jenisKendaraan().addItemListener(this);
-        
+        utamaView.getCb_jenisKendaraan().setSelectedItem(null);
         utamaView.getJb_bayar().addActionListener(this);
+        utamaView.getBtnKaryawan().addActionListener(this);
+        jam();
+        updateTiket();
+        
     }
     
+    
+    public void updateTiket(){
+        Timer timer = new Timer(10000,updateTikets());
+        timer.start();
+    }
     
     public void loadAllTiket(){
         List<Tiket> tikets = tiket.getAllTiket();
@@ -77,6 +87,7 @@ public class UtamaController implements ActionListener, ItemListener {
             };
             dtm.addRow(row);
         }
+        utamaView.getBtnDafKar().addActionListener(this);
         utamaView.setTableModel(dtm);
         LOG.info("Successfully load data to table model");
     }
@@ -90,6 +101,11 @@ public class UtamaController implements ActionListener, ItemListener {
     
     public void setLoggedKaryawan(Karyawan k){
         this.karyawan=k;
+        if("ADMIN".equals(k.getUsername().toUpperCase())){
+            utamaView.setVisibleBtnKaryawan(true);
+            return;
+        }
+        utamaView.setVisibleBtnKaryawan(false);
     }
     
     public void showPage(){
@@ -97,20 +113,48 @@ public class UtamaController implements ActionListener, ItemListener {
         utamaView.setlbl_karyawanName("Nama Karyawan : "+karyawan.getNama());
     }
     
+    public void jam() {
+        // Membuat objek DateTimeFormatter dengan format waktu yang diinginkan
+        
+        Timer timer = new Timer(1000,ubahWaktuView());
+        timer.start();
+//        while (true) {
+//            // Membuat objek LocalTime dengan waktu saat ini
+//
+//            // Menggunakan objek DateTimeFormatter untuk memformat waktu
+//
+//            // Menampilkan waktu
+//            utamaView.waktuRT(formattedTime);
+//
+//            try {
+//                // Menunda eksekusi selama 1 detik
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
+        
         if(e.getSource()==utamaView.getJb_cari()){
             //Ketika tombol cari di klik;
-            waktuMasuk = th.getTiketWaktuMasukById(Integer.parseInt(utamaView.getTb_kode().getText()));
-            if(waktuMasuk != null){
-                //Sukses ketemu ID
-                utamaView.getL_masuk().setText(waktuMasuk);
-                LOG.info("Id Tiket loaded");
-            }
-            else{
-                JOptionPane.showMessageDialog(utamaView, "Id Tidak Ditemukan");
-                LOG.severe("ID TIDAK DITEMUKAN");
-            }
+                try{
+                    waktuMasuk = th.getTiketWaktuMasukById(Integer.parseInt(utamaView.getTb_kode().getText()));
+                    if(waktuMasuk != null){
+                        //Sukses ketemu ID
+                        utamaView.getL_masuk().setText(waktuMasuk);
+                        LOG.info("Id Tiket loaded");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(utamaView, "Id Tidak Ditemukan");
+                        LOG.severe("ID TIDAK DITEMUKAN");
+                    }
+                }
+                catch(NumberFormatException ex){
+                    LOG.severe("ID TIDAK ADA");
+                }
         }
         if(e.getSource()==utamaView.getJb_bayar()){
             if(utamaView.getTb_masukuang().getText()!=null){
@@ -123,11 +167,30 @@ public class UtamaController implements ActionListener, ItemListener {
                     LocalDateTime sekarang = LocalDateTime.now();
                     uh.printNota(idd,waktuMasuk,sekarang, jjns, karyawan.getNama(), totalTarif);
                     uh.inputDB(sekarang, jjns, totalTarif, idd);
+                    loadAllTiket();
+                    return;
                 }else{
                     utamaView.showMessage("Uang Kurang");
                 }
             }
         }
+        if(e.getSource()==utamaView.getBtnKaryawan()){
+            LOG.info("Berpindah Ke menu Karyawan");
+            inputKaryawanController ikc = new inputKaryawanController(this);
+            utamaView.setVisible(false);
+            ikc.showFrame();
+            return;
+        }
+        if(e.getSource()==utamaView.getBtnDafKar()){
+            LOG.info("Berpindah Ke daftar Karyawan");
+            DaftarKaryawanController dkc = new DaftarKaryawanController(this);
+            utamaView.setVisible(false);
+            dkc.showFrame();
+        }
+    }
+    
+    public void showFrame(){
+        utamaView.setVisible(true);
     }
 
     @Override
@@ -142,10 +205,31 @@ public class UtamaController implements ActionListener, ItemListener {
             totalTarif = durasiInHours * listHargaKendaraan.get(utamaView.getCb_jenisKendaraan().getSelectedItem());
 
             utamaView.getL_tarif().setText(totalTarif + "("+listHargaKendaraan.get(utamaView.getCb_jenisKendaraan().getSelectedItem()).toString()+"/Jam)");
-            
         }
-        else{
-            utamaView.showMessage("Input Id Tiket Terlebih Dahulu!");
-        }
+    }
+
+    private ActionListener ubahWaktuView() {
+        return (ActionEvent e) -> {
+            try {
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                utamaView.setWaktuRT(LocalDateTime.now().format(timeFormatter));
+            } catch (Exception ex) {
+                LOG.severe(ex.getMessage());
+            }
+        };
+    }
+
+    private ActionListener updateTikets() {
+        return (ActionEvent e)->{
+            try{
+                if(uh.getTotalTiket()!=-1){
+                    loadAllTiket();
+                    System.out.println("data update");
+                }
+            }
+            catch(Exception ex){
+                LOG.severe(ex.getMessage());
+            }
+        };
     }
 }

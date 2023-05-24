@@ -1,11 +1,11 @@
 =========== Nota Karcis ============
 
- NO    : 40
- Masuk : 2023-05-20 23:36:34
- Keluar: 2023-05-22 14:10:17
+ NO    : 6
+ Masuk : 2023-05-20 13:31:32
+ Keluar: 2023-05-22 18:36:58
  Jenis : Motor
- Ptgs  : budi
- Tarif : 76000.0
+ Ptgs  : ADMIN
+ Tarif : 106000.0
 ====================================
 
  *TERIMA KASIH ATAS KUNJUNGAN ANDA* 
