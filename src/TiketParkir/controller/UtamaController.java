@@ -118,21 +118,6 @@ public class UtamaController implements ActionListener, ItemListener {
         
         Timer timer = new Timer(1000,ubahWaktuView());
         timer.start();
-//        while (true) {
-//            // Membuat objek LocalTime dengan waktu saat ini
-//
-//            // Menggunakan objek DateTimeFormatter untuk memformat waktu
-//
-//            // Menampilkan waktu
-//            utamaView.waktuRT(formattedTime);
-//
-//            try {
-//                // Menunda eksekusi selama 1 detik
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
     
     @Override

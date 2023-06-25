@@ -40,6 +40,5 @@ public class InputKarcisController implements ActionListener{
         th.printTiket(tiket);
         LOG.info("Tiket Ditambahkan ke Database");
         idTotal++;
-    }
-    
+    } 
 }

@@ -69,7 +69,7 @@ public class Karyawan {
         return Id;
     }
     
-        public List<Karyawan> getAllTiket(){
+    public List<Karyawan> getAllTiket(){
         List<Karyawan> karys = kh.getAllTiket();
         return karys;
     }

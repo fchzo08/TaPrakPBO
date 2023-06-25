@@ -8,6 +8,7 @@ import TiketParkir.helper.ConnectionDB;
 import TiketParkir.views.InputKarcis;
 import TiketParkir.views.Login;
 import TiketParkir.views.InputKaryawan;
+import java.sql.SQLException;
 
 /**
  *
@@ -18,7 +19,7 @@ public class TaPBO {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         
         Login a = new Login();
         a.setVisible(true);
